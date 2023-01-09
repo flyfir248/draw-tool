@@ -1,31 +1,23 @@
-import string
-from PIL import Image, ImageDraw, ImageFont
-import random
+from PIL import Image, ImageDraw
 
-# Generate a random color
-def random_color():
-    return (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
+# Create a blank image
+image = Image.new('RGB', (400, 400), (255, 255, 255))
 
-# Generate an image with a random color and a random string of text
-def generate_image():
-    # Create a new image with a random color
-    image = Image.new('RGB', (200, 200), random_color())
+# Create a draw object
+draw = ImageDraw.Draw(image)
 
-    # Create a draw object
-    draw = ImageDraw.Draw(image)
+# Start a line at (100, 100)
+x1, y1 = 100, 100
 
-    # Generate a random string of text
-    text = ''.join(random.choices(string.ascii_letters + string.digits, k=10))
+while True:
+    # Get the next point for the line
+    x2, y2 = map(int, input('Enter the next point for the line (x y): ').split())
 
-    # Get a font
-    font = ImageFont.truetype('arial.ttf', 36)
+    # Draw the line
+    draw.line((x1, y1, x2, y2), fill=(0, 0, 0))
 
-    # Draw the text on the image
-    draw.text((10, 10), text, font=font, fill=(0, 0, 0))
+    # Update the starting point for the next line
+    x1, y1 = x2, y2
 
-    return image
-
-# Generate and save an image
-image = generate_image()
-image.save('image.jpg')
-
+    # Display the image
+    image.show()
